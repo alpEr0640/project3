@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  home:
+    build: ./home
+    container_name: home-service
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
+  cart:
+    build: ./cart
+    container_name: cart-service
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
