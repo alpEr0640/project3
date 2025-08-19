@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # bağımlılıkları yükle
-RUN npm install
+RUN bun install
 
 # kaynak kodları kopyala
 COPY . .
 
 # build al
-RUN npm run build
+RUN bun run build
 
 # container içi port
 EXPOSE 3000

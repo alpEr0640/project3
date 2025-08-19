@@ -1,25 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface CartState {
-  items: string[];
+export interface CartState {
+  items: CartItem[];
 }
 
 const initialState: CartState = {
-  items: typeof window !== "undefined"
-    ? JSON.parse(localStorage.getItem("cart") || "[]")
-    : [],
+  items:
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("cart") || "[]")
+      : [], 
 };
+
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+   image: string;
+}
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<string>) => {
-      state.items.push(action.payload);
-      // 🔹 localStorage'a da yaz
-      if (typeof window !== "undefined") {
-        localStorage.setItem("cart", JSON.stringify(state.items));
+   addItem: (state, action: PayloadAction<CartItem>) => {
+      const existing = state.items.find((i) => i.id === action.payload.id);
+      if (existing) {
+        existing.quantity += action.payload.quantity;
+      } else {
+        state.items.push(action.payload);
       }
+      localStorage.setItem("cart", JSON.stringify(state.items));
     },
     clearCart: (state) => {
       state.items = [];

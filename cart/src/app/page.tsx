@@ -1,23 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "@/store";
 import { setCart } from "@/features/cart/slice";
 
-
 export default function Home() {
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.cart.items);
+  const [mounted, setMounted] = useState(false); 
 
-  // Sayfa açıldığında localStorage'dan oku ve RTK'ya yükle
   useEffect(() => {
     const saved = localStorage.getItem("cart");
     if (saved) {
       dispatch(setCart(JSON.parse(saved)));
     }
+    setMounted(true);
   }, [dispatch]);
+
+  if (!mounted) {
+    
+    return null;
+  }
 
   return (
     <div className="p-6">
@@ -28,7 +33,7 @@ export default function Home() {
         <ul className="mt-2 space-y-2">
           {items.map((i, idx) => (
             <li key={idx} className="text-green-600">
-              {i}
+              {i.name}
             </li>
           ))}
         </ul>
