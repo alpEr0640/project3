@@ -13,6 +13,9 @@ RUN npm install
 # kaynak kodları kopyala
 COPY . .
 
+ENV NEXT_PUBLIC_API_URL=https://fakestoreapi.com
+ENV NODE_ENV=production
+
 # build al
 RUN npm run build
 
