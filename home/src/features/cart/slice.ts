@@ -8,7 +8,7 @@ const initialState: CartState = {
   items:
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("cart") || "[]")
-      : [], 
+      : [],
 };
 
 export interface CartItem {
@@ -16,14 +16,14 @@ export interface CartItem {
   name: string;
   price: number;
   quantity: number;
-   image: string;
+  image: string;
 }
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-   addItem: (state, action: PayloadAction<CartItem>) => {
+    addItem: (state, action: PayloadAction<CartItem>) => {
       const existing = state.items.find((i) => i.id === action.payload.id);
       if (existing) {
         existing.quantity += action.payload.quantity;
@@ -38,6 +38,7 @@ const cartSlice = createSlice({
         localStorage.setItem("cart", JSON.stringify([]));
       }
     },
+   
   },
 });
 

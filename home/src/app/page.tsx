@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/slice";
 import { Product } from "../services/types";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function Home() {
   return (
     <div className="p-6">
       <h1 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
-        🛍️ Home App - Ürünler
+        🛍️ Ürünler
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -56,7 +57,7 @@ export default function Home() {
                 ₺{p.price}
               </span>
               <button
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     addItem({
                       id: p.id,
@@ -65,8 +66,9 @@ export default function Home() {
                       quantity: 1,
                       image: p.image,
                     })
-                  )
-                }
+                  );
+                  toast.success("Ürün sepete eklendi!");
+                }}
                 className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded-lg transition-colors"
               >
                 Sepete Ekle
